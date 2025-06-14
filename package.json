@@ -1,0 +1,12 @@
+{
+  "name": "simp-tools",
+  "version": "1.0.0",
+  "main": "simp-tools.js",
+  "scripts": {
+    "test": "node ./test-random.js"
+  },
+  "keywords": [],
+  "author": "Москаленко Андрій",
+  "license": "MIT",
+  "description": "Бібліотека простих інструментів"
+}
