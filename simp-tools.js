@@ -47,9 +47,75 @@ function testGenerator(generate, timeout, baskets) {
 }
 
 
+// Функція для створення двунаправленої черги з пріорітетом
+function createQueue() {
+  return {
+    items: [],
+    prioritis: [],
+    // Додати елемент в чергу
+    enqueue: function (item = null, priority = -1) {
+      if(typeof priority !== 'number' || isNaN(priority)) {
+        priority = -2;
+      }
+      this.items.push(item);
+      this.prioritis.push(priority);
+    },
+    // Прибрати елемент із черги
+    dequeue: function (discipline = "oldest") {
+      // highest, lower, oldest, newest
+      if(this.items.length == 0) {
+        return;
+      }
+      switch(discipline) {
+        case "highest":
+          const max = Math.max(...this.prioritis);
+          const maxIndex = this.prioritis.indexOf(max);
+          this.items.splice(maxIndex, 1);
+          this.prioritis.splice(maxIndex, 1);
+          break;
+        case "lower":
+          const min = Math.min(...this.prioritis);
+          const minIndex = this.prioritis.indexOf(min);
+          this.items.splice(minIndex, 1);
+          this.prioritis.splice(minIndex, 1);
+          break;  
+        case "oldest":
+          this.items.shift();
+          this.prioritis.shift();
+          break;
+        case "newest": 
+          this.items.pop();  
+          this.prioritis.pop();
+          break;
+      }
+    },
+    // Подивитись елемент черги
+    peek: function (discipline = "newest") {
+      if(this.items.length === 0) {
+        return;
+      }
+      switch(discipline) {
+        case "highest":
+          const max = Math.max(...this.prioritis);
+          const maxIndex = this.prioritis.indexOf(max);
+          return this.items[maxIndex];
+        case "lower":
+          const min = Math.min(...this.prioritis);
+          const minIndex = this.prioritis.indexOf(min);
+          return this.items[minIndex];  
+        case "oldest":
+          return this.items[0];
+        case "newest":
+          return this.items[this.items.length-1];
+      }
+    },
+  };
+} 
+
+
 // EXPORT
 //----------------------------------------------------------------------
-module.exports = { xorshift32, testGenerator };
+module.exports = { xorshift32, testGenerator, createQueue };
 
 
 // THE END
