@@ -3,14 +3,14 @@
 // Група ІМ-42, КПІ, 2025
 //----------------------------------------------------------------------
 
-// Генератор випадкових чисел
-// Видає значення в діапазоні [0, 1)
-function xorshift32( seed ) {
+// Створю генератор випадкових чисел
+function createGenerator( seed ) {
   // JavaScript зберігає всі числа як 64-бітні числа з плаваючою комою, 
   // але побітові операції працюють з 32-бітними цілими.
   // приведення до беззнакового 32-бітного числа (uint32)
   let x = seed >>> 0; 
 
+  // Видає значення в діапазоні [0, 1)
   //  << — лівий побітовий зсув
   // >>> — правий побітовий зсув без збереження знаку
   //   ^ — побітове виключне АБО (XOR)
@@ -47,7 +47,7 @@ function testGenerator(generate, timeout, baskets) {
 }
 
 
-// Функція для створення двунаправленої черги з пріорітетом
+// Створює двунаправлену чергу з пріорітетом
 function createQueue() {
   return {
     items: [],
@@ -113,9 +113,48 @@ function createQueue() {
 } 
 
 
+// Створює wrapper (логуючий зі статистикою)
+function createLoggingDecorator(func) {
+  // Об'єкт для накопичення статистики
+  const stats = {
+    callCount: 0,
+    totalTime: 0,
+    avgTime: 0,
+    lastArgs: null,
+    lastResult: null
+  };
+
+  // Обгортка робочої функції
+  function wrapper(...args) {
+    // Виконуємо робочу функцію і збираємо статитстику
+    const start = performance.now();
+    const result = func(...args);
+    const end = performance.now();
+    const duration = end - start;
+    // Оновлюємо статистику
+    stats.callCount += 1;
+    stats.totalTime += duration;
+    stats.avgTime = stats.totalTime / stats.callCount;
+    stats.lastArgs = args;
+    stats.lastResult = result;
+    // Логування
+    console.log(` Called ${func.name || 'anonymous'}(${args.join(', ')})`);
+    console.log(` Result: ${result}`);
+    console.log(` Execution time: ${duration.toFixed(2)}ms`);
+    // 
+    return result;
+  }
+
+  // Додаємо у wrapper доступ до статистики
+  wrapper.stats = stats;
+  // 
+  return wrapper;
+}
+
+
 // EXPORT
 //----------------------------------------------------------------------
-module.exports = { xorshift32, testGenerator, createQueue };
+module.exports = { createGenerator, testGenerator, createQueue, createLoggingDecorator };
 
 
 // THE END

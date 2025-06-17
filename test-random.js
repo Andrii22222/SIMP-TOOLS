@@ -1,15 +1,16 @@
 //----------------------------------------------------------------------
 // Випробування генератора випадкових чисел
 //----------------------------------------------------------------------
-// import * as sts from './simp-tools.js';
+
 const sts = require('./simp-tools.js');
 
-
 // Створюємо генератор (фіксований seed)
-const myRandom = sts.xorshift32(4222);
+const myRandom = sts.createGenerator(4222);
 
 // Проводимо випробування
+console.log('Start testing..');
 const histogram = sts.testGenerator(myRandom, 5, 20);
+console.log('Testing complited: ');
 
 // Виводмо результат
 for (let i = 0; i < histogram.length; i++) {
