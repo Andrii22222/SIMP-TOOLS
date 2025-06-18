@@ -1,7 +1,8 @@
 {
   "name": "simp-tools",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "simp-tools.js",
+  "type": "module",
   "scripts": {
     "test": "node ./test-random.js"
   },

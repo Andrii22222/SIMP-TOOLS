@@ -4,7 +4,7 @@
 //----------------------------------------------------------------------
 
 // Створю генератор випадкових чисел
-function createGenerator( seed ) {
+export function createGenerator( seed ) {
   // JavaScript зберігає всі числа як 64-бітні числа з плаваючою комою, 
   // але побітові операції працюють з 32-бітними цілими.
   // приведення до беззнакового 32-бітного числа (uint32)
@@ -26,7 +26,7 @@ function createGenerator( seed ) {
 }
 
 // Ітератор для перевірки якості генератора випадкових чисел
-function testGenerator(generate, timeout, baskets) {
+export function testGenerator(generate, timeout, baskets) {
   // generate - генератор випадкових чисел
   // timeout - час на виконання
   // baskets - кількість кошиків у гістограммі
@@ -48,7 +48,7 @@ function testGenerator(generate, timeout, baskets) {
 
 
 // Створює двунаправлену чергу з пріорітетом
-function createQueue() {
+export function createQueue() {
   return {
     items: [],
     prioritis: [],
@@ -114,7 +114,7 @@ function createQueue() {
 
 
 // Створює wrapper (логуючий зі статистикою)
-function createLoggingDecorator(func) {
+export function createLoggingDecorator(func) {
   // Об'єкт для накопичення статистики
   const stats = {
     callCount: 0,
@@ -154,7 +154,7 @@ function createLoggingDecorator(func) {
 
 // EXPORT
 //----------------------------------------------------------------------
-module.exports = { createGenerator, testGenerator, createQueue, createLoggingDecorator };
+// module.exports = { createGenerator, testGenerator, createQueue, createLoggingDecorator };
 
 
 // THE END

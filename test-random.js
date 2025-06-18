@@ -2,7 +2,8 @@
 // Випробування генератора випадкових чисел
 //----------------------------------------------------------------------
 
-const sts = require('./simp-tools.js');
+// const sts = require('./simp-tools.js');
+import * as sts from './simp-tools.js';
 
 // Створюємо генератор (фіксований seed)
 const myRandom = sts.createGenerator(4222);

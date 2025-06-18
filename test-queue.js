@@ -2,7 +2,8 @@
 // Випробування  двунаправленої черги з пріорітетом
 //----------------------------------------------------------------------
 
-const sts = require('./simp-tools.js');
+// const sts = require('./simp-tools.js');
+import * as sts from './simp-tools.js';
 
 const q = sts.createQueue();
 
